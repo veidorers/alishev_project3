@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -28,4 +30,6 @@ public class Measurement {
     @ManyToOne
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
+
+    private LocalDateTime measuredAt;
 }

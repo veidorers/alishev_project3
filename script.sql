@@ -9,3 +9,5 @@ CREATE TABLE Measurement(
     raining BOOLEAN NOT NULL ,
     sensor_id INT REFERENCES Sensor(id) NOT NULL
 );
+
+ALTER TABLE Measurement ADD COLUMN measured_at TIMESTAMP NOT NULL;
