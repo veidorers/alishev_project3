@@ -31,6 +31,11 @@ public class MeasurementsController {
         this.measurementMapper = measurementMapper;
     }
 
+    @GetMapping("/rainyDaysCount")
+    public long countRainyDays() {
+        return measurementsService.countRainyDays();
+    }
+
     @GetMapping
     public List<MeasurementDto> findAll() {
         return measurementsService.findAll().stream()

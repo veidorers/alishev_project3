@@ -13,12 +13,10 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MeasurementsService {
     private final MeasurementsRepository measurementsRepository;
-    private final SensorsService sensorsService;
 
     @Autowired
-    public MeasurementsService(MeasurementsRepository measurementsRepository, SensorsService sensorsService) {
+    public MeasurementsService(MeasurementsRepository measurementsRepository) {
         this.measurementsRepository = measurementsRepository;
-        this.sensorsService = sensorsService;
     }
 
     public List<Measurement> findAll() {
@@ -29,5 +27,9 @@ public class MeasurementsService {
     public void save(Measurement measurement) {
         measurement.setMeasuredAt(LocalDateTime.now());
         measurementsRepository.save(measurement);
+    }
+
+    public long countRainyDays() {
+        return measurementsRepository.countByRainingTrue();
     }
 }
