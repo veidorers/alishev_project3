@@ -1,13 +1,12 @@
 package com.example.springcourse.project3.controller;
 
 import com.example.springcourse.project3.dto.SensorDto;
-import com.example.springcourse.project3.model.Sensor;
+import com.example.springcourse.project3.mapper.SensorMapper;
 import com.example.springcourse.project3.service.SensorsService;
 import com.example.springcourse.project3.util.SensorErrorResponse;
 import com.example.springcourse.project3.util.SensorNotCreatedException;
 import com.example.springcourse.project3.util.SensorValidator;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +19,19 @@ import org.springframework.web.bind.annotation.*;
 public class SensorsController {
     private final SensorsService sensorsService;
     private final SensorValidator sensorValidator;
-    private final ModelMapper modelMapper;
+    private final SensorMapper sensorMapper;
 
     @Autowired
-    public SensorsController(SensorsService sensorsService, SensorValidator sensorValidator, ModelMapper modelMapper) {
+    public SensorsController(SensorsService sensorsService, SensorValidator sensorValidator, SensorMapper sensorMapper) {
         this.sensorsService = sensorsService;
         this.sensorValidator = sensorValidator;
-        this.modelMapper = modelMapper;
+        this.sensorMapper = sensorMapper;
     }
 
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> add(@RequestBody @Valid SensorDto sensorDto,
                                           BindingResult bindingResult) {
-        sensorValidator.validate(convertDtoToSensor(sensorDto), bindingResult);
+        sensorValidator.validate(sensorDto, bindingResult);
         if(bindingResult.hasErrors()) {
             var errorMessage = new StringBuilder();
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -44,7 +43,7 @@ public class SensorsController {
             throw new SensorNotCreatedException(errorMessage.toString());
         }
 
-        sensorsService.save(convertDtoToSensor(sensorDto));
+        sensorsService.save(sensorMapper.convertDtoToSensor(sensorDto));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -56,9 +55,5 @@ public class SensorsController {
                 .build();
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    private Sensor convertDtoToSensor(SensorDto sensorDto) {
-        return modelMapper.map(sensorDto, Sensor.class);
     }
 }

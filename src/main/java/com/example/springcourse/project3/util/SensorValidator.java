@@ -1,6 +1,6 @@
 package com.example.springcourse.project3.util;
 
-import com.example.springcourse.project3.model.Sensor;
+import com.example.springcourse.project3.dto.SensorDto;
 import com.example.springcourse.project3.service.SensorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,14 +19,14 @@ public class SensorValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Sensor.class.equals(clazz);
+        return SensorDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        Sensor sensor = (Sensor) target;
+        SensorDto sensorDto = (SensorDto) target;
 
-        var mayBeSensor = sensorsService.findByName(sensor.getName());
+        var mayBeSensor = sensorsService.findByName(sensorDto.getName());
         if(mayBeSensor != null) {
             errors.rejectValue("name", "", "Sensor with this name already exists");
         }

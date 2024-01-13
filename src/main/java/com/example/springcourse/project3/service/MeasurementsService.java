@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,9 +21,12 @@ public class MeasurementsService {
         this.sensorsService = sensorsService;
     }
 
+    public List<Measurement> findAll() {
+        return measurementsRepository.findAll();
+    }
+
     @Transactional
     public void save(Measurement measurement) {
-        measurement.setSensor(sensorsService.findByName(measurement.getSensor().getName()));
         measurement.setMeasuredAt(LocalDateTime.now());
         measurementsRepository.save(measurement);
     }

@@ -5,12 +5,14 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 public class MeasurementDto {
     @NotNull
     @Min(value = -100, message = "Temperature should be greater than or equal to -100")
@@ -21,5 +23,5 @@ public class MeasurementDto {
     private Boolean raining;
 
     @NotNull(message = "Sensor should not be null")
-    private Sensor sensor;
+    private SensorDto sensor;
 }
