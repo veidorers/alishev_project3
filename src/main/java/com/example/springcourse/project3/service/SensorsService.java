@@ -4,8 +4,10 @@ import com.example.springcourse.project3.model.Sensor;
 import com.example.springcourse.project3.repository.SensorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class SensorsService {
     private final SensorsRepository sensorsRepository;
 
@@ -14,6 +16,7 @@ public class SensorsService {
         this.sensorsRepository = sensorsRepository;
     }
 
+    @Transactional
     public void save(Sensor sensor) {
         sensorsRepository.save(sensor);
     }

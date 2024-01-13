@@ -1,24 +1,17 @@
-package com.example.springcourse.project3.model;
+package com.example.springcourse.project3.dto;
 
-import jakarta.persistence.*;
+import com.example.springcourse.project3.model.Sensor;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-@Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
-public class Measurement {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+@Builder
+public class MeasurementDto {
     @NotNull
     @Min(value = -100, message = "Temperature should be greater than or equal to -100")
     @Max(value = 100, message = "Temperature should be less than or equal to 100")
@@ -28,9 +21,5 @@ public class Measurement {
     private Boolean raining;
 
     @NotNull(message = "Sensor should not be null")
-    @ManyToOne
-    @JoinColumn(name = "sensor_id")
     private Sensor sensor;
-
-    private LocalDateTime measuredAt;
 }

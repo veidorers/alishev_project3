@@ -15,10 +15,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class SensorDto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @NotEmpty(message = "Sensor name should not be empty")
     @Size(min = 3, max = 30, message = "Sensor name size should be between 3 and 30")
     private String name;
