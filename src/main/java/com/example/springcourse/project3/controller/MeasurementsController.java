@@ -1,6 +1,7 @@
 package com.example.springcourse.project3.controller;
 
 import com.example.springcourse.project3.dto.MeasurementDto;
+import com.example.springcourse.project3.dto.MeasurementsResponse;
 import com.example.springcourse.project3.mapper.MeasurementMapper;
 import com.example.springcourse.project3.service.MeasurementsService;
 import com.example.springcourse.project3.util.MeasurementErrorResponse;
@@ -37,9 +38,9 @@ public class MeasurementsController {
     }
 
     @GetMapping
-    public List<MeasurementDto> findAll() {
-        return measurementsService.findAll().stream()
-                .map(measurementMapper::convertMeasurementToDto).collect(Collectors.toList());
+    public MeasurementsResponse findAll() {
+        return new MeasurementsResponse(measurementsService.findAll().stream()
+                .map(measurementMapper::convertMeasurementToDto).collect(Collectors.toList()));
     }
 
     @PostMapping("/add")
